@@ -1,13 +1,13 @@
-import { Router } from "express";
-import { ReasonPhrases, StatusCodes } from "http-status-codes";
-import TodoModel from "../../database/models/TodoModel";
+import { Router } from 'express';
+import { ReasonPhrases, StatusCodes } from 'http-status-codes';
+import TodoModel from '../../database/models/TodoModel';
 
 const TodosRouter = Router();
 
-// GET REQUESTS
+// GET  REQUESTS
 // /v1/todos/bytodoid
-TodosRouter.get("/byid", async (req, res) => {
-  const todoId: any = req.query.todoId;
+TodosRouter.get('/byid', async (req, res) => {
+  const todoId = parseInt(req.query.todoId as string);
   if (!todoId) {
     res.status(StatusCodes.BAD_REQUEST).send(ReasonPhrases.BAD_REQUEST);
     return;
@@ -18,13 +18,13 @@ TodosRouter.get("/byid", async (req, res) => {
 });
 
 // Alle Todos von einer UserId
-TodosRouter.get("/byuserid", async (req, res) => {
+TodosRouter.get('/byuserid', async (req, res) => {
   const userId = parseInt(req.query.userId as string);
 
   if (!userId) {
     res
       .status(StatusCodes.BAD_REQUEST)
-      .send(ReasonPhrases.BAD_REQUEST + " Keine userID");
+      .send(ReasonPhrases.BAD_REQUEST + ' Keine userID');
     return;
   }
 
@@ -35,17 +35,17 @@ TodosRouter.get("/byuserid", async (req, res) => {
   res.status(StatusCodes.OK).json({ todos: userTodos });
 });
 
-TodosRouter.get("/all", async (req, res) => {
+TodosRouter.get('/all', async (req, res) => {
   const todos = await TodoModel.findAll();
   res.status(StatusCodes.OK).send(todos);
 });
 
 // PUT REQUESTS
-TodosRouter.put("/mark", async (req, res) => {
+TodosRouter.put('/mark', async (req, res) => {
   try {
     const { todoId, newIsDone } = req.body;
 
-    if (!todoId) throw Error("keine User Id");
+    if (!todoId) throw Error('keine User Id');
 
     await TodoModel.update({ isDone: newIsDone }, { where: { id: todoId } });
 
@@ -55,7 +55,7 @@ TodosRouter.put("/mark", async (req, res) => {
   }
 });
 
-TodosRouter.put("/update", async (req, res) => {
+TodosRouter.put('/update', async (req, res) => {
   const { todoId, newTask, newIsDone, newDueDate } = req.body;
 
   await TodoModel.update(
@@ -64,19 +64,19 @@ TodosRouter.put("/update", async (req, res) => {
       isDone: newIsDone,
       dueDate: newDueDate,
     },
-    { where: { id: todoId } }
+    { where: { id: todoId } },
   );
 
   res.status(StatusCodes.OK).json({ updatedTodoId: todoId });
 });
 
 // POST REQUESTS
-TodosRouter.post("/create", async (req, res) => {
+TodosRouter.post('/create', async (req, res) => {
   const { newTask, newIsDone, newDueDate, newUserId } = req.body;
 
-  console.log("Here we are", newTask, newIsDone, newDueDate, newUserId);
+  console.log('Here we are', newTask, newIsDone, newDueDate, newUserId);
   if (!newTask || !newDueDate || !newUserId) {
-    throw ReferenceError("One of my required Parameters is not defined");
+    throw ReferenceError('One of my required Parameters is not defined');
   }
 
   const newTodo = {
@@ -92,7 +92,7 @@ TodosRouter.post("/create", async (req, res) => {
 });
 
 // DELETE REQUEST
-TodosRouter.delete("/delete", async (req, res) => {
+TodosRouter.delete('/delete', async (req, res) => {
   const { todoId } = req.body; //req.body.todoId
 
   await TodoModel.destroy({ where: { id: todoId } });
