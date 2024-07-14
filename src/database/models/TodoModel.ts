@@ -11,7 +11,8 @@ interface TodoCreationAttributes
 // Define the Todo model class
 class TodoModel
   extends Model<TodoAttributes, TodoCreationAttributes>
-  implements TodoAttributes {
+  implements TodoAttributes
+{
   public id!: number;
 
   public userId!: number;
