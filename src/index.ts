@@ -1,6 +1,5 @@
 import todoSequelize from './database/setup/database';
 import server from './server';
-
 // const { PORT } = process.env;
 const PORT = process.env.PORT;
 
@@ -9,7 +8,7 @@ todoSequelize
   .then(() => {
     console.log('DB has been successfully initialized');
   })
-  .catch((e) => {
+  .catch(e => {
     console.log(e);
   });
 
