@@ -7,7 +7,7 @@
     "test": "DOTENV_CONFIG_PATH=.test.env jest",
     "dev": "nodemon",
     "build": "tsc",
-    "lint": "eslint . --ext .ts",
+    "lint": "eslint 'src/**/*.{ts,tsx}'",
     "lint:fix": "eslint 'src/**/*.{ts,tsx}' --fix",
      "prettier": "prettier --check .",
     "prettier:fix": "prettier --write ."
