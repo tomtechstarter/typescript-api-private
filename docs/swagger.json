@@ -1,0 +1,117 @@
+{
+	"openapi": "3.0.0",
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"ISetDeviceInfoResponse": {
+				"type": "boolean"
+			},
+			"Error": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"message": {
+						"type": "string"
+					},
+					"stack": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"message"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ISetDeviceInfoBody": {
+				"properties": {
+					"userId": {
+						"type": "number",
+						"format": "double"
+					},
+					"version": {
+						"type": "string",
+						"nullable": true
+					},
+					"baseOs": {
+						"type": "string",
+						"enum": [
+							"ios",
+							"android",
+							"windows",
+							"web"
+						]
+					}
+				},
+				"required": [
+					"userId",
+					"version",
+					"baseOs"
+				],
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {}
+	},
+	"info": {
+		"title": "typescript-api",
+		"version": "1.0.0",
+		"license": {
+			"name": "ISC"
+		},
+		"contact": {}
+	},
+	"paths": {
+		"/v1/stats/deviceinfo": {
+			"post": {
+				"operationId": "SetDeviceInfo",
+				"responses": {
+					"409": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/ISetDeviceInfoResponse"
+										},
+										{
+											"$ref": "#/components/schemas/Error"
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Statistics"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ISetDeviceInfoBody"
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}
